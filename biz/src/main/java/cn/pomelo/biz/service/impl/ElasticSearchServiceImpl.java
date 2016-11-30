@@ -5,7 +5,6 @@ import java.util.Map;
 
 import cn.pomelo.biz.service.intf.ElasticSearchService;
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import com.google.common.base.Preconditions;
 import org.elasticsearch.action.index.IndexResponse;
 import org.elasticsearch.client.transport.TransportClient;
@@ -66,9 +65,6 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
         }
         Preconditions.checkNotNull(client, "create elasticsearch client failed");
 
-        // client.admin().indices().prepareCreate(index).execute().actionGet();
-        // createIndex();
-
     }
 
     @PreDestroy
@@ -78,24 +74,11 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
         }
     }
 
-    /**
-     * 创建es库并
-     *
-     * @return _id
-     */
-    private String createIndex() {
-
-        IndexResponse response = client.prepareIndex(index, type).setSource("{\"name\":12}").get();
-
-        logger.info("create index response: {}", response.toString());
-
-        return response.getId();
-    }
-
     private IndexResponse insert(Map mapSource) {
 
-        String source = JSON.toJSONString(mapSource);
-        IndexResponse response = client.prepareIndex(index, type).setSource(source).get();
+        logger.info("insert data : {}", JSON.toJSONString(mapSource));
+
+        IndexResponse response = client.prepareIndex(index, type).setSource(mapSource).get();
 
         return response;
     }
@@ -104,7 +87,6 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
     public void insertRecord(Map map) {
         // TODO
         insert(map);
-        logger.info("insert data : %s", JSON.toJSONString(map));
     }
 
     public String getIndex() {
