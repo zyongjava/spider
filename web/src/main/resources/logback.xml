@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Logback Configuration. -->
+<configuration debug="true">
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+		<target>System.out</target>
+		<encoding>UTF-8</encoding>
+		<layout class="ch.qos.logback.classic.PatternLayout">
+			<pattern><![CDATA[
+			 [%d{yyyy-MM-dd HH:mm:ss}]  %-5level %logger{0} - %m%n
+            ]]></pattern>
+		</layout>
+	</appender>
+
+	<appender name="STDERR" class="ch.qos.logback.core.ConsoleAppender">
+		<target>System.err</target>
+		<encoding>UTF-8</encoding>
+		<layout class="ch.qos.logback.classic.PatternLayout">
+			<pattern><![CDATA[
+[%d{yyyy-MM-dd HH:mm:ss} ] - %X{method} %X{requestURIWithQueryString} [ip=%X{remoteAddr}, ref=%X{referrer}, ua=%X{userAgent}, sid=%X{cookie.JSESSIONID}]%n  %-5level %logger{35} - %m%n
+            ]]></pattern>
+		</layout>
+	</appender>
+
+	<!-- 生成日志文件 -->
+	<appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<!--日志文件输出的文件名 -->
+		<file>${LOG_PATH}/${LOG_FILE}.log</file>
+
+		<!-- 固定数量的日志文件，防止将磁盘占满 -->
+		<rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+			<fileNamePattern>${LOG_PATH}/${LOG_FILE}.%i.log
+			</fileNamePattern>
+			<minIndex>1</minIndex>
+			<maxIndex>10</maxIndex>
+		</rollingPolicy>
+
+		<!--日志文件最大的大小 -->
+		<triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+			<MaxFileSize>500MB</MaxFileSize>
+		</triggeringPolicy>
+
+		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+			<!--格式化输出：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度%msg：日志消息，%n是换行符 -->
+			<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%X{requestURIWithQueryString}] %-5level %logger{20} - %msg%n</pattern>
+		</encoder>
+	</appender>
+
+	
+	<!-- ibatis log end -->
+	<root>
+		<level value="INFO" />
+		<appender-ref ref="STDOUT" />
+		<appender-ref ref="STDERR" />
+		<appender-ref ref="FILE" />
+	</root>
+</configuration>
