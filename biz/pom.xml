@@ -87,6 +87,17 @@
             <artifactId>jackson-core</artifactId>
         </dependency>
 
+        <!-- webmagic -->
+        <dependency>
+            <groupId>us.codecraft</groupId>
+            <artifactId>webmagic-core</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>us.codecraft</groupId>
+            <artifactId>webmagic-extension</artifactId>
+        </dependency>
+
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
