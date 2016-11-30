@@ -12,7 +12,7 @@
 
 > elastic-job : 分布式作业调度系统
 
-> webMagic : 爬虫框架，有去重功能，支持Xpath、regex、css选择器
+> webMagic : 爬虫框架，有去重功能，支持Xpath、regex、css等选择器
 
 #### 三. 运行方式
 
@@ -27,3 +27,8 @@
 
     http://localhost:8080/ok
     http://localhost:8080/home
+
+#### 五. 备注
+
+1. [ElasticSearch搭建步骤](http://blog.csdn.net/zhengyong15984285623/article/details/52260396)
+
