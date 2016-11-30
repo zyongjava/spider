@@ -1,6 +1,6 @@
 package cn.pomelo.biz.service.intf;
 
-import com.alibaba.fastjson.JSONObject;
+import java.util.Map;
 
 /**
  * elasticSearch接口
@@ -9,7 +9,7 @@ import com.alibaba.fastjson.JSONObject;
 public interface ElasticSearchService {
 
     /**
-     * @param jsonObject
+     * @param map
      */
-    void insertRecord(JSONObject jsonObject);
+    void insertRecord(Map map);
 }
