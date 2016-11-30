@@ -10,9 +10,9 @@
 
 > elasticSearch : 作为nosql数据存储引擎
 
-> elastic-job : 分布式作业调度系统
+> elastic-job : 分布式作业调度系统, 依赖zookeeper环境作为分布式协同
 
-> webMagic : 爬虫框架，有去重功能，支持Xpath、regex、css等选择器
+> WebMagic : 爬虫框架，有去重功能，支持Xpath、regex、css等选择器
 
 #### 三. 运行方式
 
@@ -31,4 +31,6 @@
 #### 五. 备注
 
 1. [ElasticSearch搭建步骤](http://blog.csdn.net/zhengyong15984285623/article/details/52260396)
+2. [Elastic-Job构建步骤](http://blog.csdn.net/zhengyong15984285623/article/details/52345931)
+3. [Zookeeper使用步骤](http://blog.csdn.net/zhengyong15984285623/article/details/53323131)
 
