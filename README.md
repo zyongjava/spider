@@ -11,3 +11,9 @@
   方式二: maven打成jar包后,将使用命令 `java -jar spider-1.0.0-SNAPSHOT.war &` 启动spider-1.0.0-SNAPSHOT.war
 
   方式三: 部署在tomcat中直接运行
+
+
+#### 三. 访问
+
+    http://localhost:8080/ok
+    http://localhost:8080/home
