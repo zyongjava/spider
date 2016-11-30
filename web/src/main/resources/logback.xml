@@ -45,8 +45,6 @@
 		</encoder>
 	</appender>
 
-	
-	<!-- ibatis log end -->
 	<root>
 		<level value="INFO" />
 		<appender-ref ref="STDOUT" />
