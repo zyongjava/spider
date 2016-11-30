@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 import com.dangdang.ddframe.job.api.JobExecutionMultipleShardingContext;
 import com.dangdang.ddframe.job.plugin.job.type.simple.AbstractSimpleElasticJob;
 
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.Map;
 
@@ -28,9 +29,10 @@ public class SpiderElasticJob extends AbstractSimpleElasticJob {
     public void process(JobExecutionMultipleShardingContext context) {
         try {
             Map map = Maps.newHashMap();
-            map.put("name", "定时器");
-            map.put("time", new Date());
-            map.put("age", 20);
+            map.put("name", "定时器" + Math.floor(Math.random() * 10));
+            map.put("@time", new Date());
+            map.put("@timestamp", new Timestamp(new Date().getTime()));
+            map.put("age", Math.floor(Math.random() * 10));
             elasticSearchService.insertRecord(map);
         } catch (Exception e) {
             logger.error(e.getMessage(), e);

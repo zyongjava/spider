@@ -16,6 +16,8 @@
 
 #### 三. 运行方式
 
+  先启动`zookeeper`和`elasticsearch` , 并修改相应配置,然后按下面任意方式启动项目
+
 >  方式一: 执行命令`mvn spring-boot:run`即可启动
 
 >  方式二: maven打成jar包后,将使用命令 `java -jar spider-1.0.0-SNAPSHOT.war &` 启动spider-1.0.0-SNAPSHOT.war

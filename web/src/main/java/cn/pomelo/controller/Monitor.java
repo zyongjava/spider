@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.Map;
 
@@ -34,9 +35,10 @@ public class Monitor {
     @ResponseBody
     public String es(String name) {
         Map map = Maps.newHashMap();
-        map.put("name", name);
-        map.put("time", new Date());
-        map.put("age", 10);
+        map.put("name", "网页" + name);
+        map.put("@time", new Date());
+        map.put("@timestamp", new Timestamp(new Date().getTime()));
+        map.put("age", Math.floor(Math.random() * 10));
         elasticSearchService.insertRecord(map);
         return "success";
     }
