@@ -1,6 +1,7 @@
 package cn.pomelo.controller;
 
 import cn.pomelo.biz.service.intf.ElasticSearchService;
+import cn.pomelo.biz.service.intf.SpiderService;
 import com.google.common.collect.Maps;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,6 +20,9 @@ public class Monitor {
 
     @Autowired
     private ElasticSearchService elasticSearchService;
+
+    @Autowired
+    private SpiderService        spiderService;
 
     @RequestMapping(value = "/ok")
     @ResponseBody
@@ -41,5 +45,12 @@ public class Monitor {
         map.put("age", Math.floor(Math.random() * 10));
         elasticSearchService.insertRecord(map);
         return "success";
+    }
+
+    @RequestMapping(value = "/spider")
+    @ResponseBody
+    public String spider(String url) {
+        spiderService.crawl(url);
+        return "spider start";
     }
 }

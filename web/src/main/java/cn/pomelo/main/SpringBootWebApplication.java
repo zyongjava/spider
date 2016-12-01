@@ -7,10 +7,9 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.context.web.SpringBootServletInitializer;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.ImportResource;
 import org.springframework.web.bind.annotation.RestController;
 
-@ImportResource(value = { "classpath:elastic-job.xml" })
+//@ImportResource(value = { "classpath:elastic-job.xml" })
 @RestController
 @ComponentScan("cn.pomelo")
 @EnableConfigurationProperties({ ElasticSearchServiceImpl.class })
