@@ -9,7 +9,8 @@ import java.util.Map;
 public interface ElasticSearchService {
 
     /**
+     * @param id elasticsearch _id
      * @param map
      */
-    void insertRecord(Map map);
+    void insertRecord(String id, Map map);
 }

@@ -74,19 +74,21 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
         }
     }
 
-    private IndexResponse insert(Map mapSource) {
+    private IndexResponse insert(String id, Map mapSource) {
+
+        Preconditions.checkNotNull(id, "id must not be null.");
 
         logger.info("insert data : {}", JSON.toJSONString(mapSource));
 
-        IndexResponse response = client.prepareIndex(index, type).setSource(mapSource).get();
+        IndexResponse response = client.prepareIndex(index, type).setId(id).setSource(mapSource).get();
 
         return response;
     }
 
     @Override
-    public void insertRecord(Map map) {
+    public void insertRecord(String id, Map map) {
         // TODO
-        insert(map);
+        insert(id, map);
     }
 
     public String getIndex() {

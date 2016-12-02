@@ -33,7 +33,7 @@ public class SpiderElasticJob extends AbstractSimpleElasticJob {
             map.put("@time", new Date());
             map.put("@timestamp", new Timestamp(new Date().getTime()));
             map.put("age", Math.floor(Math.random() * 10));
-            elasticSearchService.insertRecord(map);
+            elasticSearchService.insertRecord(null, map);
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
         }

@@ -43,10 +43,11 @@ public class Monitor {
         map.put("@time", new Date());
         map.put("@timestamp", new Timestamp(new Date().getTime()));
         map.put("age", Math.floor(Math.random() * 10));
-        elasticSearchService.insertRecord(map);
+        elasticSearchService.insertRecord(null, map);
         return "success";
     }
 
+    // http://www.funi.com/loupan/region_56_0_0_0_1
     @RequestMapping(value = "/spider")
     @ResponseBody
     public String spider(String url) {
