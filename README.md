@@ -27,8 +27,7 @@
 
 #### 四. 访问
 
-    http://localhost:8080/ok
-    http://localhost:8080/home
+    http://localhost:8080/spider?url=http://www.funi.com/loupan/region_56_0_0_0_1
 
 #### 五. 备注
 

@@ -6,6 +6,8 @@ import java.util.Map;
 import cn.pomelo.biz.service.intf.ElasticSearchService;
 import com.alibaba.fastjson.JSON;
 import com.google.common.base.Preconditions;
+import org.apache.commons.lang3.StringUtils;
+import org.elasticsearch.action.index.IndexRequestBuilder;
 import org.elasticsearch.action.index.IndexResponse;
 import org.elasticsearch.client.transport.TransportClient;
 import org.elasticsearch.common.settings.Settings;
@@ -52,7 +54,7 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
 
         Preconditions.checkNotNull(host, "elasticsearch host must not be null");
 
-        Preconditions.checkNotNull(port, "elasticsearch port is null.");
+        Preconditions.checkNotNull(port, "elasticsearch port must not be null.");
 
         Preconditions.checkNotNull(clusterName, "elasticsearch clusterName must not be null");
 
@@ -74,21 +76,31 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
         }
     }
 
-    private IndexResponse insert(String id, Map mapSource) {
+    private boolean insert(String id, Map source) {
 
-        Preconditions.checkNotNull(id, "id must not be null.");
+        Preconditions.checkNotNull(source, "source must not be null.");
 
-        logger.info("insert data : {}", JSON.toJSONString(mapSource));
+        logger.info("insert data : {}", JSON.toJSONString(source));
 
-        IndexResponse response = client.prepareIndex(index, type).setId(id).setSource(mapSource).get();
+        IndexRequestBuilder builder = client.prepareIndex(index, type).setSource(source);
+        if (StringUtils.isNotBlank(id)) {
+            builder.setId(id);
+        }
+        IndexResponse response = builder.get();
 
-        return response;
+        logger.info("insert response : {}", response.toString());
+
+        return response.isCreated();
     }
 
     @Override
-    public void insertRecord(String id, Map map) {
-        // TODO
-        insert(id, map);
+    public boolean insertRecord(String id, Map record) {
+        return insert(id, record);
+    }
+
+    @Override
+    public boolean insertRecord(Map record) {
+        return insert(null, record);
     }
 
     public String getIndex() {

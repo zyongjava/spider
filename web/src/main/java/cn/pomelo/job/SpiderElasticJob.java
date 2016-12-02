@@ -1,7 +1,6 @@
 package cn.pomelo.job;
 
-import cn.pomelo.biz.service.intf.ElasticSearchService;
-import com.google.common.collect.Maps;
+import cn.pomelo.biz.service.intf.SpiderService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,30 +9,26 @@ import org.springframework.stereotype.Component;
 import com.dangdang.ddframe.job.api.JobExecutionMultipleShardingContext;
 import com.dangdang.ddframe.job.plugin.job.type.simple.AbstractSimpleElasticJob;
 
-import java.sql.Timestamp;
-import java.util.Date;
-import java.util.Map;
-
 /**
- * elastic-job
+ * 定时器 elastic-job
  */
 @Component
 public class SpiderElasticJob extends AbstractSimpleElasticJob {
 
-    private static final Logger  logger = LoggerFactory.getLogger(SpiderElasticJob.class);
+    private static final Logger logger = LoggerFactory.getLogger(SpiderElasticJob.class);
 
     @Autowired
-    private ElasticSearchService elasticSearchService;
+    private SpiderService       spiderService;
 
     @Override
     public void process(JobExecutionMultipleShardingContext context) {
         try {
-            Map map = Maps.newHashMap();
-            map.put("name", "定时器" + Math.floor(Math.random() * 10));
-            map.put("@time", new Date());
-            map.put("@timestamp", new Timestamp(new Date().getTime()));
-            map.put("age", Math.floor(Math.random() * 10));
-            elasticSearchService.insertRecord(null, map);
+
+            // TODO 定时器占时关闭, 后续开发
+            spiderService.crawl("http://www.funi.com/loupan/region_56_0_0_0_1");
+
+            logger.info("spider elastic job execute.");
+
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
         }

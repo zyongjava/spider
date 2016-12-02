@@ -1,16 +1,12 @@
-package cn.pomelo.biz.service.impl;
+package cn.pomelo.biz.service.processor;
 
-import cn.pomelo.biz.service.intf.ElasticSearchService;
-import cn.pomelo.biz.utils.MD5Util;
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
+import static cn.pomelo.biz.constant.Constant.RESULT_LIST_MAP;
+
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import us.codecraft.webmagic.Page;
 import us.codecraft.webmagic.Site;
@@ -24,17 +20,15 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 成都透明房产网 Created by zhengyong on 16/11/30.
+ * 页面解析 - 成都透明房产网 <br/>
+ * Created by zhengyong on 16/11/30.
  */
 @Service("funiSpiderProcessor")
 public class FuniSpiderProcessor implements PageProcessor {
 
-    public static Logger         logger = LoggerFactory.getLogger(FuniSpiderProcessor.class);
+    public static Logger logger = LoggerFactory.getLogger(FuniSpiderProcessor.class);
 
-    private Site                 site   = Site.me().setSleepTime(10).setCycleRetryTimes(3).setUserAgent("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.85 Safari/537.36");
-
-    @Autowired
-    private ElasticSearchService elasticSearchService;
+    private Site site = Site.me().setSleepTime(10).setCycleRetryTimes(3).setUserAgent("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.85 Safari/537.36");
 
     @Override
     public void process(Page page) {
@@ -51,7 +45,6 @@ public class FuniSpiderProcessor implements PageProcessor {
 
         // 户型页面判断 http://www.funi.com/xf/xinyuanxindouhui/huxing_63790079-6848-4980-b565-ca9fec440a54
         if (!page.getUrl().regex(".*/huxing_.*").match()) {
-            logger.info("huxing={}", page.getUrl().toString());
             page.setSkip(true);
             return;
         }
@@ -61,10 +54,11 @@ public class FuniSpiderProcessor implements PageProcessor {
 
         List<String> buildings = page.getHtml().xpath("//div[@id=houseList]/dl/dd/div[@class=lptabl]/table/tbody/tr").all();
         if (CollectionUtils.isEmpty(buildings)) {
-            logger.info("page={}", page.getUrl().toString());
             page.setSkip(true);
             return;
         }
+
+        List<Map<String, String>> pageList = Lists.newArrayList();
 
         for (String build : buildings) {
             StringBuilder br = new StringBuilder();
@@ -84,7 +78,6 @@ public class FuniSpiderProcessor implements PageProcessor {
             map.put("url", page.getUrl().toString());
             map.put("region", region);
             map.put("name", name);
-            // map.put("location", location);
 
             map.put("building", building);
             map.put("unit", unit);
@@ -94,41 +87,33 @@ public class FuniSpiderProcessor implements PageProcessor {
             map.put("houseType", houseType);
             map.put("price", price);
 
-            String id = ganerateId(map);
-            elasticSearchService.insertRecord(id, map);
-            logger.info(JSON.toJSONString(map));
+            pageList.add(map);
+
         }
 
+        if (CollectionUtils.isNotEmpty(pageList)) {
+            page.putField(RESULT_LIST_MAP, pageList);
+        }
     }
 
+    /**
+     * 过滤不需要爬取url
+     *
+     * @param pagination url列表
+     */
     private void filterUrl(List<String> pagination) {
 
         if (CollectionUtils.isEmpty(pagination)) {
             return;
         }
-        for (Iterator iter = pagination.iterator(); iter.hasNext();) {
+        for (Iterator iter = pagination.iterator(); iter.hasNext(); ) {
             String url = (String) iter.next();
             if (url.indexOf("detail.htm") != -1 || url.indexOf("house.htm") != -1 || url.indexOf("consult.htm") != -1
-                || url.indexOf("map.htm") != -1 || url.indexOf("photo") != -1 || url.indexOf("news.htm") != -1
-                || url.indexOf("guide.htm") != -1 || url.indexOf("news_official.htm") != -1) {
+                    || url.indexOf("map.htm") != -1 || url.indexOf("photo") != -1 || url.indexOf("news.htm") != -1
+                    || url.indexOf("guide.htm") != -1 || url.indexOf("news_official.htm") != -1) {
                 iter.remove();
             }
         }
-    }
-
-    /**
-     * 生成es _id
-     * 
-     * @param map
-     * @return _id
-     */
-    private String ganerateId(Map map) {
-        Map idMap = Maps.newHashMap();
-        idMap.putAll(map);
-        idMap.remove("@timestamp");
-        idMap.remove("url");
-        String id = MD5Util.md5(JSON.toJSONString(idMap));
-        return id;
     }
 
     @Override

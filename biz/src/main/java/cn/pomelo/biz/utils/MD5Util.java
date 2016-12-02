@@ -32,5 +32,4 @@ public class MD5Util {
         return null;
     }
 
-
 }
