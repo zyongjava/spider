@@ -31,7 +31,17 @@
 
 #### 五. 备注
 
+  可以使用kanana动态展示elasticSearch存储数据, 效果图如下:
+
+  ![kabana-1](web/src/main/resources/image/kabana-1.png)
+  ![kabana-2](web/src/main/resources/image/kabana-2.png)
+
 1. [ElasticSearch搭建步骤](http://blog.csdn.net/zhengyong15984285623/article/details/52260396)
 2. [Elastic-Job构建步骤](http://blog.csdn.net/zhengyong15984285623/article/details/52345931)
 3. [Zookeeper使用步骤](http://blog.csdn.net/zhengyong15984285623/article/details/53323131)
+4. [kibana安装](http://blog.csdn.net/zhengyong15984285623/article/details/53412925)
+
+
+
+
 
