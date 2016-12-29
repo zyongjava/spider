@@ -29,12 +29,14 @@
 
     http://localhost:8080/spider?url=http://www.funi.com/loupan/region_56_0_0_0_1
 
-#### 五. 备注
+#### 五. 可视化
 
-  可以使用kibana动态展示elasticSearch存储数据, 效果图如下:
+  使用kibana关联elasticsearch, 动态展示elasticsearch存储数据, 效果图如下:
 
   ![kibana-1](web/src/main/webapp/image/kibana-1.png)
   ![kibana-2](web/src/main/webapp/image/kibana-2.png)
+
+#### 六. 备注
 
 1. [ElasticSearch搭建步骤](http://blog.csdn.net/zhengyong15984285623/article/details/52260396)
 2. [Elastic-Job构建步骤](http://blog.csdn.net/zhengyong15984285623/article/details/52345931)
