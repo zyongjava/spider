@@ -31,10 +31,10 @@
 
 #### 五. 备注
 
-  可以使用kabana动态展示elasticSearch存储数据, 效果图如下:
+  可以使用kibana动态展示elasticSearch存储数据, 效果图如下:
 
-  ![kabana-1](web/src/main/resources/image/kabana-1.png)
-  ![kabana-2](web/src/main/resources/image/kabana-2.png)
+  ![kibana-1](web/src/main/webapp/image/kibana-1.png)
+  ![kibana-2](web/src/main/webapp/image/kibana-2.png)
 
 1. [ElasticSearch搭建步骤](http://blog.csdn.net/zhengyong15984285623/article/details/52260396)
 2. [Elastic-Job构建步骤](http://blog.csdn.net/zhengyong15984285623/article/details/52345931)
