@@ -31,7 +31,7 @@
 
 #### 五. 备注
 
-  可以使用kanana动态展示elasticSearch存储数据, 效果图如下:
+  可以使用kabana动态展示elasticSearch存储数据, 效果图如下:
 
   ![kabana-1](web/src/main/resources/image/kabana-1.png)
   ![kabana-2](web/src/main/resources/image/kabana-2.png)
